@@ -41,3 +41,24 @@ $response = (new \StreamAlly\StreamAlly('sampleApiToken'))->register([
 ]);
 
 ```
+
+### Response
+
+The response includes the JSON returned from the API in associative array format.
+
+```
+
+[
+   "success" => true,
+   "user" => [
+        "id" => 3299393,
+        "name" => "John Smith",
+         ...
+    ],
+    "links" => [
+        "https://studio.streamally.live/go/1234578?token=134545674"
+    ]
+]
+
+```
+
