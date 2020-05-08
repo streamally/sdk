@@ -1,0 +1,17 @@
+{
+    "name": "devpartners/streamally",
+    "require": {
+        "kitetail/zttp": "^0.6.0"
+    },
+    "authors": [
+        {
+            "name": "Matt Watson",
+            "email": "matt@devpartners.io"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/StreamAlly.php"
+        ]
+    }
+}
