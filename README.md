@@ -29,6 +29,10 @@ $response = (new \StreamAlly\StreamAlly('sampleApiToken'))->register([
    'name' => 'John Smith',
     // Email is required
    'email' => 'john@example.net',
+ 
+    // Show ID from StreamAlly Studio
+    'show_id' => '3240438024',
+
     // Country code should be included
     // Only include phone if user has opted-in to text messages
    'phone' => '19541234567',

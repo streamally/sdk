@@ -38,7 +38,7 @@ class StreamAlly
      */
     public function register($data = [])
     {
-        $response = Zttp::post($this->host . '?api_token=' . $this->apiToken, $data);
+        $response = Zttp::post($this->host . '/api/user/register?api_token=' . $this->apiToken, $data);
 
         if (!$response->isOk()) {
             throw new \Exception('Unable to register user!');
