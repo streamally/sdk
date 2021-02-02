@@ -2,33 +2,76 @@
 
 namespace StreamAlly;
 
+use StreamAlly\Concerns\Message;
+use StreamAlly\Concerns\Poll;
+use StreamAlly\Concerns\Show;
 use Zttp\Zttp;
 
 class StreamAlly
 {
+    use Show;
+    use Message;
+    use Poll;
+
     protected $apiToken;
     protected $host = 'https://studio.streamally.live';
+    protected $http;
+    protected $urlParts = [];
 
     /**
      * UrlShortener constructor.
      * @param $apiToken
      */
-    public function __construct($apiToken)
+    public function __construct($apiToken, $sandbox = false)
     {
+        $this->http = Zttp::withHeaders([
+            'X-API-TOKEN' => $apiToken,
+        ])
+            ->withOptions([
+                'base_uri' => $sandbox ? $this->sandboxUri() : $this->apiUri()
+            ]);
+
         $this->apiToken = $apiToken;
 
         return $this;
     }
 
-    /**
-     * @param $host
-     * @return $this
-     */
-    public function host($host)
+    public function addUrlSegment($string)
     {
-        $this->host = $host;
+        if (is_null($string)) {
+            return $this;
+        }
+
+        array_push($this->urlParts, $string);
 
         return $this;
+    }
+
+    public function getUrlSegments()
+    {
+        return implode('/', $this->urlParts);
+    }
+
+    protected function sandboxUri()
+    {
+        $sandbox = getenv('STREAMALLY_SANDBOX_URI');
+
+        if ($sandbox) {
+            return $sandbox;
+        }
+
+        return 'https://sandbox.streamally.live/api/v2/';
+    }
+
+    protected function apiUri()
+    {
+        $api = getenv('STREAMALLY_API_URI');
+
+        if ($api) {
+            return $api;
+        }
+
+        return 'https://studio.streamally.live/api/v2/';
     }
 
     /**
@@ -38,12 +81,16 @@ class StreamAlly
      */
     public function register($data = [])
     {
-        $response = Zttp::post($this->host . '/api/user/register?api_token=' . $this->apiToken, $data);
+        return $this->addUrlSegment('/api/user/register')->post($data);
+    }
 
-        if (!$response->isOk()) {
-            throw new \Exception('Unable to register user!');
-        }
+    public function get($parameters = [])
+    {
+        return $this->http->get($this->getUrlSegments(), $parameters);
+    }
 
-        return $response->json();
-    } 
+    public function post($parameters = [])
+    {
+        return $this->http->post($this->getUrlSegments(), $parameters);
+    }
 }
