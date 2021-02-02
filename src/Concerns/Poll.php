@@ -11,4 +11,14 @@ trait Poll
 
         return $this;
     }
+
+    public function activate()
+    {
+        return $this->addUrlSegment('activate')->post();
+    }
+
+    public function clear()
+    {
+        return $this->addUrlSegment('clear')->post();
+    }
 }
