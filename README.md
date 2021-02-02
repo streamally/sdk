@@ -1,23 +1,11 @@
+Currently, the SDK in beta, so use at your own risk. Things might change without any warning.
+
 # Installation
 
-Add the private repository to the repositories section of your composer.json file:
+Add the package via composer.
 
 ```
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:dev-partners/streamally-sdk.git",
-            "package": {
-                "name": "devpartners/streamally"
-            }
-        }
-    ],
-```
-
-Then add the package using composer
-
-```
-composer require devpartners/streamally
+composer require streamally/sdk
 ```
 
 # Registering Users
@@ -38,10 +26,8 @@ $response = (new \StreamAlly\StreamAlly('sampleApiToken'))->register([
    'phone' => '19541234567',
     // By default, if not included, one device will be assigned
    'devices' => 2,
-    // Number of minutes before premiere date/time a notification should be sent out
-    // If the resulting time is in the past, the notification will be sent immediately
-    // If phone is included, a text will be sent
-    'notify_minutes_before' => 120,
+    // Send a notification by email and/or text message
+    'notify' => 120,
 ]);
 
 ```
