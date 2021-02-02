@@ -25,7 +25,6 @@ class StreamAlly
     public function __construct($apiToken, $sandbox = false)
     {
         $this->http = Zttp::withHeaders([
-            'Authorization' => 'Bearer '. $apiToken,
             'Accept' => 'application/json',
         ])
             ->withOptions([
@@ -87,11 +86,15 @@ class StreamAlly
 
     public function get($parameters = [])
     {
+        $parameters['api_token'] = $this->apiToken;
+
         return $this->http->get($this->getUrlSegments(), $parameters);
     }
 
     public function post($parameters = [])
     {
+        $parameters['api_token'] = $this->apiToken;
+
         return $this->http->post($this->getUrlSegments(), $parameters);
     }
 }
