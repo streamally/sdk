@@ -25,7 +25,8 @@ class StreamAlly
     public function __construct($apiToken, $sandbox = false)
     {
         $this->http = Zttp::withHeaders([
-            'X-API-TOKEN' => $apiToken,
+            'Authorization' => 'Bearer '. $apiToken,
+            'Accept' => 'application/json',
         ])
             ->withOptions([
                 'base_uri' => $sandbox ? $this->sandboxUri() : $this->apiUri()
