@@ -27,7 +27,7 @@ $response = (new \StreamAlly\StreamAlly('sampleApiToken'))->register([
     // By default, if not included, one device will be assigned
    'devices' => 2,
     // Send a notification by email and/or text message
-    'notify' => 120,
+    'notify' => 1,
 ]);
 
 ```
