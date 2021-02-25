@@ -26,9 +26,10 @@ class StreamAlly
     {
         $this->http = Zttp::withHeaders([
             'Accept' => 'application/json',
+            'Content-Type' => 'application/json',
         ])
             ->withOptions([
-                'base_uri' => $sandbox ? $this->sandboxUri() : $this->apiUri()
+                'base_uri' => $sandbox ? $this->sandboxUri() : $this->apiUri(),
             ]);
 
         $this->apiToken = $apiToken;
